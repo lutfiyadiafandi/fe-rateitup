@@ -13,9 +13,10 @@ import { Input } from "../ui/input";
 import { Rating } from "../ui/rating";
 import CardComment from "./CardComment";
 import { useState } from "react";
+import { Textarea } from "../ui/textarea";
 
 const CardReview = () => {
-  const [action, setAction] = useState(true);
+  const [action, setAction] = useState(false);
   const [seeComments, setSeeComments] = useState(false);
   return (
     <Card className="py-6">
@@ -71,12 +72,8 @@ const CardReview = () => {
             <CardComment />
           </div>
           <div className="flex items-center w-full gap-2 mt-5">
-            <Input
-              type="text"
-              placeholder="Write a comment..."
-              className="h-12"
-            />
-            <Button type={"submit"} variant={"default"} className="size-12">
+            <Textarea name="comment" placeholder="Write a comment..." />
+            <Button type={"submit"} variant={"default"} className="size-14">
               <Send />
             </Button>
           </div>
