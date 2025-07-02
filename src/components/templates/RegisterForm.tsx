@@ -20,12 +20,19 @@ const RegisterForm = () => {
               </div>
               <div className="grid gap-3">
                 <Label htmlFor="name">Full Name</Label>
-                <Input id="name" type="text" placeholder="Name..." required />
+                <Input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder="Name..."
+                  required
+                />
               </div>
               <div className="grid gap-3">
                 <Label htmlFor="username">Username</Label>
                 <Input
                   id="username"
+                  name="username"
                   type="text"
                   placeholder="Username..."
                   required
@@ -35,6 +42,7 @@ const RegisterForm = () => {
                 <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
+                  name="password"
                   type="password"
                   placeholder="Password..."
                   required

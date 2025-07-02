@@ -1,4 +1,4 @@
-import { Send } from "lucide-react";
+import { Send, SquarePen, Trash } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   Card,
@@ -15,6 +15,7 @@ import CardComment from "./CardComment";
 import { useState } from "react";
 
 const CardReview = () => {
+  const [action, setAction] = useState(true);
   const [seeComments, setSeeComments] = useState(false);
   return (
     <Card className="py-6">
@@ -35,15 +36,31 @@ const CardReview = () => {
       <CardFooter className="flex items-center justify-between">
         <Rating value={3} />
         <CardDescription>24 May 2023</CardDescription>
-        <CardAction>
-          <Button
-            type={"button"}
-            size={"sm"}
-            variant={"link"}
-            onClick={() => setSeeComments(!seeComments)}
-          >
-            See All Comments
-          </Button>
+        <CardAction className="flex items-center">
+          {action ? (
+            <div className="flex gap-2">
+              <Button
+                type="button"
+                size={"lg"}
+                variant={"outline"}
+                className="bg-emerald-400"
+              >
+                <SquarePen />
+              </Button>
+              <Button type="button" size={"lg"} variant={"destructive"}>
+                <Trash />
+              </Button>
+            </div>
+          ) : (
+            <Button
+              type={"button"}
+              size={"sm"}
+              variant={"link"}
+              onClick={() => setSeeComments(!seeComments)}
+            >
+              See All Comments
+            </Button>
+          )}
         </CardAction>
       </CardFooter>
       {seeComments && (

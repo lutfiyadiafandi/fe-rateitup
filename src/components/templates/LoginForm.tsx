@@ -24,6 +24,7 @@ const LoginForm = () => {
                 <Label htmlFor="username">Username</Label>
                 <Input
                   id="username"
+                  name="username"
                   type="text"
                   placeholder="Username..."
                   required
@@ -33,6 +34,7 @@ const LoginForm = () => {
                 <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
+                  name="password"
                   type="password"
                   placeholder="Password..."
                   required
