@@ -4,13 +4,30 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
 import Logo from "@/assets/react.svg";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema, type LoginForm } from "@/utils/Schema";
 
 const LoginForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<LoginForm>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const onSubmit = async (data: LoginForm) => {
+    // TODO: handle API call here
+    console.log(data);
+    reset();
+  };
   return (
     <main className="flex items-center justify-center min-h-screen overflow-x-hidden">
       <Card className="flex flex-col w-full max-w-3xl gap-6">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
+          <form onSubmit={handleSubmit(onSubmit)} className="p-6 md:p-8">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-4xl font-bold text-neutral-900">
@@ -24,24 +41,39 @@ const LoginForm = () => {
                 <Label htmlFor="username">Username</Label>
                 <Input
                   id="username"
-                  name="username"
                   type="text"
                   placeholder="Username..."
                   required
+                  {...register("username")}
                 />
+                {errors.username && (
+                  <span className="text-xs text-red-500">
+                    {errors.username.message}
+                  </span>
+                )}
               </div>
               <div className="grid gap-3">
                 <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
-                  name="password"
                   type="password"
                   placeholder="Password..."
                   required
+                  {...register("password")}
                 />
+                {errors.password && (
+                  <span className="text-xs text-red-500">
+                    {errors.password.message}
+                  </span>
+                )}
               </div>
-              <Button type="submit" className="w-full" variant={"default"}>
-                Login
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full"
+                variant={"default"}
+              >
+                {isSubmitting ? "Loading..." : "Login"}
               </Button>
 
               <div className="text-sm text-center">

@@ -12,15 +12,35 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { reviewSchema, type ReviewForm } from "@/utils/Schema";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRef } from "react";
 
 const AddReview = () => {
+  const dialogCloseRef = useRef<HTMLButtonElement>(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<ReviewForm>({
+    resolver: zodResolver(reviewSchema),
+  });
+
+  const onSubmit = async (data: ReviewForm) => {
+    // TODO: handle API call here
+    console.log(data);
+    reset();
+    dialogCloseRef.current?.click();
+  };
   return (
     <Dialog>
-      <form>
-        <DialogTrigger asChild>
-          <Button variant="default">Create Review</Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+      <DialogTrigger asChild>
+        <Button variant="default">Create Review</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <DialogHeader>
             <DialogTitle>Add Review</DialogTitle>
             <DialogDescription>
@@ -30,32 +50,52 @@ const AddReview = () => {
           <div className="grid gap-4">
             <div className="grid gap-3">
               <Label htmlFor="title">Title</Label>
-              <Input id="title" title="title" type="text" required />
+              <Input id="title" type="text" required {...register("title")} />
+              {errors.title && (
+                <span className="text-xs text-red-500">
+                  {errors.title.message}
+                </span>
+              )}
             </div>
             <div className="grid gap-3">
               <Label htmlFor="text">Text</Label>
-              <Textarea id="text" name="text" required />
+              <Textarea id="text" required {...register("text")} />
+              {errors.text && (
+                <span className="text-xs text-red-500">
+                  {errors.text.message}
+                </span>
+              )}
             </div>
             <div className="grid gap-3">
               <Label htmlFor="rating">Rating (1-5)</Label>
               <Input
                 id="rating"
-                name="rating"
                 type="number"
                 min={1}
                 max={5}
                 required
+                {...register("rating", { valueAsNumber: true })}
               />
+              {errors.rating && (
+                <span className="text-xs text-red-500">
+                  {errors.rating.message}
+                </span>
+              )}
             </div>
           </div>
           <DialogFooter>
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
-            <Button type="submit">Create Review</Button>
+            <DialogClose asChild>
+              <Button ref={dialogCloseRef} type="button" className="hidden" />
+            </DialogClose>
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Creating..." : "Create Review"}
+            </Button>
           </DialogFooter>
-        </DialogContent>
-      </form>
+        </form>
+      </DialogContent>
     </Dialog>
   );
 };

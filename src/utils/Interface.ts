@@ -1,0 +1,35 @@
+export interface IUser {
+  id: number;
+  username: string;
+  name: string;
+  role: string;
+}
+
+export interface IRestaurant {
+  id: number;
+  name: string;
+  description: string;
+  photoUrl: string;
+  location: string;
+  mapsUrl: string;
+  user: IUser;
+}
+
+export interface IReview {
+  id: number;
+  title: string;
+  text: string;
+  rating: number;
+  createdAt: Date;
+  user: IUser;
+  restaurant: IRestaurant;
+  comments: IComment[];
+}
+
+export interface IComment {
+  id: number;
+  text: string;
+  createdAt: Date;
+  user: IUser;
+  review: IReview;
+}

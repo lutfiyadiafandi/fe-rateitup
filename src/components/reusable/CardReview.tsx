@@ -1,5 +1,5 @@
-import { Send, SquarePen, Trash } from "lucide-react";
-import { Button } from "../ui/button";
+import { SquarePen, Trash } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardAction,
@@ -8,12 +8,11 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../ui/card";
-import { Input } from "../ui/input";
-import { Rating } from "../ui/rating";
-import CardComment from "./CardComment";
+} from "@/components/ui/card";
 import { useState } from "react";
-import { Textarea } from "../ui/textarea";
+import { Rating } from "@/components/ui/rating";
+import CardComment from "@/components/reusable/CardComment";
+import AddComment from "@/components/reusable/AddComment";
 
 const CardReview = () => {
   const [action, setAction] = useState(false);
@@ -41,7 +40,7 @@ const CardReview = () => {
           {action ? (
             <div className="flex gap-2">
               <Button
-                type="button"
+                type={"button"}
                 size={"lg"}
                 variant={"outline"}
                 className="bg-emerald-400"
@@ -71,12 +70,7 @@ const CardReview = () => {
             <CardComment />
             <CardComment />
           </div>
-          <div className="flex items-center w-full gap-2 mt-5">
-            <Textarea name="comment" placeholder="Write a comment..." />
-            <Button type={"submit"} variant={"default"} className="size-14">
-              <Send />
-            </Button>
-          </div>
+          <AddComment />
         </section>
       )}
     </Card>
