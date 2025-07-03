@@ -11,12 +11,23 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { updateUser } from "@/service/userApi";
 import { userSchema, type UserForm } from "@/utils/Schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
 
-const EditProfile = () => {
+const EditProfile = ({
+  name,
+  username,
+  refetch,
+  id,
+}: {
+  name?: string;
+  username?: string;
+  refetch: () => void;
+  id: number;
+}) => {
   const dialogCloseRef = useRef<HTMLButtonElement>(null);
   const {
     register,
@@ -28,29 +39,39 @@ const EditProfile = () => {
   });
 
   const onSubmit = async (data: UserForm) => {
-    // TODO: handle API call here
-    console.log(data);
-    reset();
-    dialogCloseRef.current?.click();
+    try {
+      await updateUser(id, data);
+      reset();
+      refetch();
+      dialogCloseRef.current?.click();
+    } catch (error) {
+      console.error("Failed to update profile", error);
+    }
   };
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
+        <Button variant="default">Edit Profile</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <DialogHeader>
             <DialogTitle>Edit profile</DialogTitle>
             <DialogDescription>
-              Make changes to your profile here. Click save when you&apos;re
-              done.
+              Make changes to your profile here. You can change your name and
+              username
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
             <div className="grid gap-3">
               <Label htmlFor="name">Name</Label>
-              <Input id="name" {...register("name")} required type="text" />
+              <Input
+                id="name"
+                type="text"
+                {...register("name")}
+                required
+                defaultValue={name}
+              />
               {errors.name && (
                 <span className="text-xs text-red-500">
                   {errors.name.message}
@@ -64,6 +85,7 @@ const EditProfile = () => {
                 type="text"
                 {...register("username")}
                 required
+                defaultValue={username}
               />
               {errors.username && (
                 <span className="text-xs text-red-500">

@@ -20,8 +20,7 @@ const RestaurantsDetail = () => {
   const restaurantId = Number(id);
   const { data, loading, error, refetch } = useAxios<IRestaurant>(
     getRestaurant,
-    [restaurantId],
-    []
+    [restaurantId]
   );
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;

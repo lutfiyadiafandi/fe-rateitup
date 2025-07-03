@@ -22,6 +22,7 @@ export const updateRestaurant = async (id: number, data: IRestaurant) => {
   const res = await API.put(`/restaurants/${id}`, data);
   return res.data;
 };
+
 export const deleteRestaurant = async (id: number) => {
   await API.delete(`/restaurants/${id}`);
 };

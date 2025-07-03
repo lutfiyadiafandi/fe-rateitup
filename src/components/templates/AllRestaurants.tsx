@@ -15,10 +15,8 @@ const AllRestaurants = () => {
     setIsLogin(!!token);
   }, []);
 
-  const { data, loading, error, refetch } = useAxios<IRestaurant[]>(
-    getRestaurants,
-    []
-  );
+  const { data, loading, error, refetch } =
+    useAxios<IRestaurant[]>(getRestaurants);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 

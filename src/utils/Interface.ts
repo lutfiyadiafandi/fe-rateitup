@@ -5,10 +5,10 @@ export interface ApiResponse<T> {
 }
 
 export interface IUser {
-  id: number;
+  id?: number;
   username: string;
   name: string;
-  role: string;
+  role?: string;
 }
 
 export interface IRestaurant {
