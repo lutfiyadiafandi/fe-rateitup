@@ -2,13 +2,15 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "@/assets/react.svg";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type LoginForm } from "@/utils/Schema";
+import { login } from "@/service/authApi";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -19,9 +21,15 @@ const LoginForm = () => {
   });
 
   const onSubmit = async (data: LoginForm) => {
-    // TODO: handle API call here
-    console.log(data);
-    reset();
+    try {
+      const result = await login(data);
+      console.log("Login success", result);
+      localStorage.setItem("token", result.data.token);
+      reset();
+      navigate("/");
+    } catch (error) {
+      console.error("Login failed", error);
+    }
   };
   return (
     <main className="flex items-center justify-center min-h-screen overflow-x-hidden">
