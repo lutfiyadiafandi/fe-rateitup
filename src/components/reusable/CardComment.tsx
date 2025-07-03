@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
+import { formatDate } from "@/lib/utils";
 
 const CardComment = ({ id, text, createdAt, user }: IComment) => {
   return (
@@ -22,7 +23,7 @@ const CardComment = ({ id, text, createdAt, user }: IComment) => {
         </CardDescription>
       </CardContent>
       <CardFooter className="flex items-center justify-between">
-        <CardDescription>{`${createdAt}`}</CardDescription>
+        <CardDescription>{formatDate(createdAt)}</CardDescription>
       </CardFooter>
     </Card>
   );

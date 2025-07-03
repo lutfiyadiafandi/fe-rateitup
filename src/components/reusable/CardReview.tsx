@@ -13,7 +13,8 @@ import { useState } from "react";
 import { Rating } from "@/components/ui/rating";
 import CardComment from "@/components/reusable/CardComment";
 import AddComment from "@/components/reusable/AddComment";
-import type { IReview } from "@/utils/Interface";
+import type { IComment, IReview } from "@/utils/Interface";
+import { formatDate } from "@/lib/utils";
 
 const CardReview = ({
   id,
@@ -26,6 +27,7 @@ const CardReview = ({
 }: IReview) => {
   const [action, setAction] = useState(false);
   const [seeComments, setSeeComments] = useState(false);
+
   return (
     <Card className="py-6">
       <CardHeader>
@@ -43,7 +45,7 @@ const CardReview = ({
       </CardContent>
       <CardFooter className="flex items-center justify-between">
         <Rating value={rating} />
-        <CardDescription>{`${createdAt}`}</CardDescription>
+        <CardDescription>{formatDate(createdAt)}</CardDescription>
         <CardAction className="flex items-center">
           {action ? (
             <div className="flex gap-2">
@@ -74,7 +76,7 @@ const CardReview = ({
       {seeComments && (
         <section className="px-10">
           <div className="flex flex-col gap-3">
-            {comments.map((comment: any) => (
+            {comments?.map((comment: IComment) => (
               <CardComment
                 key={comment.id}
                 id={comment.id}

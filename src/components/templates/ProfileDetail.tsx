@@ -16,12 +16,10 @@ const ProfileDetail = () => {
               <TabsTrigger value="password">Reviews</TabsTrigger>
             </TabsList>
             <TabsContent value="account">
-              <CardRestaurants />
-              <CardRestaurants />
+              {/* <CardRestaurants /> */}
+              {/* <CardRestaurants /> */}
             </TabsContent>
-            <TabsContent value="password">
-              <CardReview />
-            </TabsContent>
+            <TabsContent value="password">{/* <CardReview /> */}</TabsContent>
           </Tabs>
         </section>
       </main>

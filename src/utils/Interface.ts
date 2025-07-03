@@ -1,3 +1,9 @@
+export interface ApiResponse<T> {
+  success: boolean;
+  message: string;
+  data: T;
+}
+
 export interface IUser {
   id: number;
   username: string;
@@ -14,6 +20,7 @@ export interface IRestaurant {
   mapsUrl: string;
   userId?: number;
   user: IUser;
+  reviews?: IReview[];
 }
 
 export interface IReview {
@@ -23,7 +30,7 @@ export interface IReview {
   rating: number;
   createdAt: Date;
   user: IUser;
-  restaurant: IRestaurant;
+  restaurant?: IRestaurant;
   comments: IComment[];
 }
 
