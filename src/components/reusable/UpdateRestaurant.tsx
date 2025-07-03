@@ -15,9 +15,19 @@ import { Textarea } from "@/components/ui/textarea";
 import { restaurantSchema, type RestaurantForm } from "@/utils/Schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createRestaurant } from "@/service/restaurantApi";
+import { updateRestaurant } from "@/service/restaurantApi";
+import type { IRestaurant } from "@/utils/Interface";
+import { SquarePen } from "lucide-react";
 
-const AddRestaurant = ({ refetch }: { refetch: () => void }) => {
+const UpdateRestaurant = ({
+  id,
+  name,
+  description,
+  photoUrl,
+  location,
+  mapsUrl,
+  refetch,
+}: IRestaurant & { refetch: () => void }) => {
   const {
     register,
     handleSubmit,
@@ -29,30 +39,43 @@ const AddRestaurant = ({ refetch }: { refetch: () => void }) => {
 
   const onSubmit = async (data: RestaurantForm) => {
     try {
-      await createRestaurant(data);
+      await updateRestaurant(id!, data);
       reset();
       refetch();
     } catch (error) {
-      console.error("Failed to create restaurant", error);
+      console.error("Failed to update restaurant", error);
     }
   };
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="default">Create Restaurant</Button>
+        <Button
+          type="button"
+          size={"sm"}
+          variant={"outline"}
+          className="bg-emerald-400 hover:bg-emerald-300"
+        >
+          <SquarePen />
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <DialogHeader>
-            <DialogTitle>Add Restaurant</DialogTitle>
+            <DialogTitle>Update Restaurant</DialogTitle>
             <DialogDescription>
-              Add a new restaurant to the recomendation
+              Update the details of this restaurant
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
             <div className="grid gap-3">
               <Label htmlFor="name">Name</Label>
-              <Input id="name" type="text" required {...register("name")} />
+              <Input
+                id="name"
+                type="text"
+                required
+                {...register("name")}
+                defaultValue={name}
+              />
               {errors.name && (
                 <span className="text-xs text-red-500">
                   {errors.name.message}
@@ -65,6 +88,7 @@ const AddRestaurant = ({ refetch }: { refetch: () => void }) => {
                 id="description"
                 required
                 {...register("description")}
+                defaultValue={description}
               />
               {errors.description && (
                 <span className="text-xs text-red-500">
@@ -79,6 +103,7 @@ const AddRestaurant = ({ refetch }: { refetch: () => void }) => {
                 type="url"
                 required
                 {...register("photoUrl")}
+                defaultValue={photoUrl}
               />
               {errors.photoUrl && (
                 <span className="text-xs text-red-500">
@@ -93,6 +118,7 @@ const AddRestaurant = ({ refetch }: { refetch: () => void }) => {
                 type="text"
                 required
                 {...register("location")}
+                defaultValue={location}
               />
               {errors.location && (
                 <span className="text-xs text-red-500">
@@ -107,6 +133,7 @@ const AddRestaurant = ({ refetch }: { refetch: () => void }) => {
                 type="url"
                 required
                 {...register("mapsUrl")}
+                defaultValue={mapsUrl}
               />
               {errors.mapsUrl && (
                 <span className="text-xs text-red-500">
@@ -120,7 +147,7 @@ const AddRestaurant = ({ refetch }: { refetch: () => void }) => {
               <Button variant="outline">Cancel</Button>
             </DialogClose>
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Creating..." : "Create Restaurant"}
+              {isSubmitting ? "Updating..." : "Update Restaurant"}
             </Button>
           </DialogFooter>
         </form>
@@ -129,4 +156,4 @@ const AddRestaurant = ({ refetch }: { refetch: () => void }) => {
   );
 };
 
-export default AddRestaurant;
+export default UpdateRestaurant;

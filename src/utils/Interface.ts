@@ -9,6 +9,9 @@ export interface IUser {
   username: string;
   name: string;
   role?: string;
+  restaurants?: IRestaurant[];
+  reviews?: IReview[];
+  comments?: IComment[];
 }
 
 export interface IRestaurant {

@@ -8,8 +8,10 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Button } from "../ui/button";
-import { MapPin, SquarePen, Trash } from "lucide-react";
+import { MapPin } from "lucide-react";
 import type { IRestaurant } from "@/utils/Interface";
+import UpdateRestaurant from "./UpdateRestaurant";
+import DeleteRestaurant from "./DeleteRestaurant";
 
 const CardRestaurants = ({
   id,
@@ -18,20 +20,29 @@ const CardRestaurants = ({
   photoUrl,
   location,
   mapsUrl,
-  user,
-}: IRestaurant) => {
+  isUser,
+  refetch,
+}: IRestaurant & { isUser: boolean; refetch: () => void }) => {
   return (
     <Card>
       <CardContent className="relative w-full aspect-video bg-primary rounded-t-xl">
-        <Link to={`/restaurants/${id}`}>
+        {isUser ? (
           <img
             src={photoUrl}
             alt={name}
-            className="absolute inset-0 object-cover w-full h-full"
+            className="absolute inset-0 object-cover w-full h-full rounded-t-xl"
           />
-        </Link>
+        ) : (
+          <Link to={`/restaurants/${id}`}>
+            <img
+              src={photoUrl}
+              alt={name}
+              className="absolute inset-0 object-cover w-full h-full rounded-t-xl"
+            />
+          </Link>
+        )}
       </CardContent>
-      <CardFooter className="flex flex-col items-start gap-1.5 pb-4">
+      <CardFooter className="w-full h-full flex flex-col items-start justify-between gap-1.5 pb-4">
         <CardTitle className="text-xl font-semibold text-neutral-900">
           {name}
         </CardTitle>
@@ -45,19 +56,22 @@ const CardRestaurants = ({
               {location}
             </Button>
           </Link>
-          {/* <div className="flex gap-2">
-            <Button
-              type="button"
-              size={"lg"}
-              variant={"outline"}
-              className="bg-emerald-400"
-            >
-              <SquarePen />
-            </Button>
-            <Button type="button" size={"lg"} variant={"destructive"}>
-              <Trash />
-            </Button>
-          </div> */}
+          {isUser && (
+            <div className="flex gap-2">
+              <UpdateRestaurant
+                id={id}
+                name={name}
+                description={description}
+                photoUrl={photoUrl}
+                location={location}
+                mapsUrl={mapsUrl}
+                refetch={refetch}
+              />
+              {typeof id === "number" && (
+                <DeleteRestaurant id={id} refetch={refetch} />
+              )}
+            </div>
+          )}
         </CardAction>
       </CardFooter>
     </Card>

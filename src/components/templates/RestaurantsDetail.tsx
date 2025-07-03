@@ -28,7 +28,7 @@ const RestaurantsDetail = () => {
   return (
     <main className="w-full mx-auto overflow-hidden max-w-[768px] mt-20">
       {isLogin ? (
-        <AddReview id={restaurantId} refetch={refetch} />
+        <AddReview restaurantId={restaurantId} refetch={refetch} />
       ) : (
         <Link to="/login">
           <Button type="button" variant={"default"}>
@@ -45,7 +45,8 @@ const RestaurantsDetail = () => {
           photoUrl={data.photoUrl}
           location={data.location}
           mapsUrl={data.mapsUrl}
-          user={data.user}
+          refetch={() => {}}
+          isUser={false}
         />
       )}
       <section className="mt-10 pb-52">
@@ -54,17 +55,16 @@ const RestaurantsDetail = () => {
           {data?.reviews?.length === 0 ? (
             <p>No reviews yet</p>
           ) : (
-            data?.reviews?.map((item: IReview) => (
+            data?.reviews?.map((review: IReview) => (
               <CardReview
-                key={item.id}
-                id={item.id}
-                title={item.title}
-                text={item.text}
-                rating={item.rating}
-                createdAt={item.createdAt}
-                user={item.user}
-                comments={item.comments}
-                restaurant={item.restaurant}
+                key={review.id}
+                id={review.id}
+                title={review.title}
+                text={review.text}
+                rating={review.rating}
+                createdAt={review.createdAt}
+                user={review.user}
+                comments={review.comments}
                 refetch={refetch}
                 isUser={false}
               />

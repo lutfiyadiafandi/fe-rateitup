@@ -32,16 +32,16 @@ const AllRestaurants = () => {
         </Link>
       )}
       <section className="grid grid-cols-1 gap-5 md:grid-cols-2">
-        {data?.map((item: IRestaurant) => (
+        {data?.map((restaurant: IRestaurant) => (
           <CardRestaurants
-            key={item.id}
-            id={item.id}
-            name={item.name}
-            description={item.description}
-            photoUrl={item.photoUrl}
-            location={item.location}
-            mapsUrl={item.mapsUrl}
-            user={item.user}
+            key={restaurant.id}
+            id={restaurant.id}
+            name={restaurant.name}
+            description={restaurant.description}
+            photoUrl={restaurant.photoUrl}
+            location={restaurant.location}
+            mapsUrl={restaurant.mapsUrl}
+            isUser={false}
           />
         ))}
       </section>

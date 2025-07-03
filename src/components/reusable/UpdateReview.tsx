@@ -15,15 +15,17 @@ import { Textarea } from "@/components/ui/textarea";
 import { reviewSchema, type ReviewForm } from "@/utils/Schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createReview } from "@/service/reviewApi";
+import { updateReview } from "@/service/reviewApi";
+import type { IReview } from "@/utils/Interface";
+import { SquarePen } from "lucide-react";
 
-const AddReview = ({
-  restaurantId,
+const UpdateReview = ({
+  id,
+  title,
+  text,
+  rating,
   refetch,
-}: {
-  restaurantId: number;
-  refetch: () => void;
-}) => {
+}: IReview & { refetch: () => void }) => {
   const {
     register,
     handleSubmit,
@@ -35,31 +37,43 @@ const AddReview = ({
 
   const onSubmit = async (data: ReviewForm) => {
     try {
-      await createReview(restaurantId, data);
-      console.log(data);
+      await updateReview(id!, data);
       reset();
       refetch();
     } catch (error) {
-      console.error("Failed to create review", error);
+      console.error("Failed to update review", error);
     }
   };
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="default">Create Review</Button>
+        <Button
+          type={"button"}
+          size={"sm"}
+          variant={"outline"}
+          className="bg-emerald-400 hover:bg-emerald-300"
+        >
+          <SquarePen />
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <DialogHeader>
-            <DialogTitle>Add Review</DialogTitle>
+            <DialogTitle>Update Review</DialogTitle>
             <DialogDescription>
-              Add a new review for the restaurant
+              Update your review for this restaurant
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
             <div className="grid gap-3">
               <Label htmlFor="title">Title</Label>
-              <Input id="title" type="text" required {...register("title")} />
+              <Input
+                id="title"
+                type="text"
+                required
+                {...register("title")}
+                defaultValue={title}
+              />
               {errors.title && (
                 <span className="text-xs text-red-500">
                   {errors.title.message}
@@ -68,7 +82,12 @@ const AddReview = ({
             </div>
             <div className="grid gap-3">
               <Label htmlFor="text">Text</Label>
-              <Textarea id="text" required {...register("text")} />
+              <Textarea
+                id="text"
+                required
+                {...register("text")}
+                defaultValue={text}
+              />
               {errors.text && (
                 <span className="text-xs text-red-500">
                   {errors.text.message}
@@ -84,6 +103,7 @@ const AddReview = ({
                 max={5}
                 required
                 {...register("rating", { valueAsNumber: true })}
+                defaultValue={rating}
               />
               {errors.rating && (
                 <span className="text-xs text-red-500">
@@ -97,7 +117,7 @@ const AddReview = ({
               <Button variant="outline">Cancel</Button>
             </DialogClose>
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Creating..." : "Create Review"}
+              {isSubmitting ? "Updating..." : "Update Review"}
             </Button>
           </DialogFooter>
         </form>
@@ -106,4 +126,4 @@ const AddReview = ({
   );
 };
 
-export default AddReview;
+export default UpdateReview;

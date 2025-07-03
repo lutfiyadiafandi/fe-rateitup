@@ -19,11 +19,10 @@ const AddComment = ({ id, refetch }: { id: number; refetch: () => void }) => {
   const onSubmit = async (data: CommentForm) => {
     try {
       await createComment(id, data);
-      console.log(data);
       reset();
       refetch();
     } catch (error) {
-      console.error("Failed to create review", error);
+      console.error("Failed to create comment", error);
     }
   };
   return (

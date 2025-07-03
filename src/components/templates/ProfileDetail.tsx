@@ -2,7 +2,7 @@ import CardRestaurants from "@/components/reusable/CardRestaurants";
 import CardReview from "@/components/reusable/CardReview";
 import EditProfile from "@/components/reusable/EditProfile";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import type { IUser } from "@/utils/Interface";
+import type { IRestaurant, IReview, IUser } from "@/utils/Interface";
 import { useAxios } from "@/hooks/useAxios";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +19,7 @@ const ProfileDetail = () => {
     localStorage.removeItem("token");
     navigate("/login");
   };
+
   return (
     <>
       <main className="w-full mx-auto overflow-hidden max-w-[768px] mt-10">
@@ -45,15 +46,49 @@ const ProfileDetail = () => {
               </Button>
             </div>
           )}
-          <Tabs defaultValue="account" className="w-full">
+          <Tabs defaultValue="restaurant" className="w-full">
             <TabsList className="flex justify-center w-full h-10 item">
-              <TabsTrigger value="account">Restaurants</TabsTrigger>
-              <TabsTrigger value="password">Reviews</TabsTrigger>
+              <TabsTrigger value="restaurant">Restaurants</TabsTrigger>
+              <TabsTrigger value="review">Reviews</TabsTrigger>
             </TabsList>
-            <TabsContent value="account">
-              {/* <CardRestaurants /> */}
+            <TabsContent
+              value="restaurant"
+              className="grid grid-cols-1 gap-5 md:grid-cols-2"
+            >
+              {data?.restaurants?.map((restaurant: IRestaurant) => (
+                <CardRestaurants
+                  key={restaurant.id}
+                  id={restaurant.id}
+                  name={restaurant.name}
+                  description={restaurant.description}
+                  photoUrl={restaurant.photoUrl}
+                  location={restaurant.location}
+                  mapsUrl={restaurant.mapsUrl}
+                  refetch={refetch}
+                  isUser
+                />
+              ))}
             </TabsContent>
-            <TabsContent value="password">{/* <CardReview /> */}</TabsContent>
+            <TabsContent
+              value="review"
+              className="grid grid-cols-1 gap-5 md:grid-cols-2"
+            >
+              {data?.reviews?.map(
+                (review: IReview) =>
+                  review?.id && (
+                    <CardReview
+                      key={review.id}
+                      id={review.id}
+                      title={review.title}
+                      text={review.text}
+                      rating={review.rating}
+                      user={review.user}
+                      refetch={refetch}
+                      isUser
+                    />
+                  )
+              )}
+            </TabsContent>
           </Tabs>
         </section>
       </main>

@@ -1,4 +1,3 @@
-import { SquarePen, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,6 +14,8 @@ import CardComment from "@/components/reusable/CardComment";
 import AddComment from "@/components/reusable/AddComment";
 import type { IComment, IReview } from "@/utils/Interface";
 import { formatDate } from "@/lib/utils";
+import UpdateReview from "./UpdateReview";
+import DeleteReview from "./DeleteReview";
 
 const CardReview = ({
   id,
@@ -26,7 +27,10 @@ const CardReview = ({
   comments,
   refetch,
   isUser,
-}: IReview & { refetch: () => void; isUser: boolean }) => {
+}: IReview & {
+  refetch: () => void;
+  isUser: boolean;
+}) => {
   const [seeComments, setSeeComments] = useState(false);
 
   return (
@@ -36,7 +40,7 @@ const CardReview = ({
           Reviews by @{user?.username}
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="h-full flex flex-col justify-between">
         <CardTitle className="text-lg font-medium text-neutral-900">
           {title}
         </CardTitle>
@@ -47,20 +51,21 @@ const CardReview = ({
       <CardFooter className="flex items-center justify-between">
         <Rating value={rating} />
         <CardDescription>{createdAt && formatDate(createdAt)}</CardDescription>
-        <CardAction className="flex items-center">
+        <CardAction>
           {isUser ? (
             <div className="flex gap-2">
-              <Button
-                type={"button"}
-                size={"lg"}
-                variant={"outline"}
-                className="bg-emerald-400"
-              >
-                <SquarePen />
-              </Button>
-              <Button type="button" size={"lg"} variant={"destructive"}>
-                <Trash />
-              </Button>
+              {typeof id === "number" && (
+                <>
+                  <UpdateReview
+                    id={id}
+                    title={title}
+                    text={text}
+                    rating={rating}
+                    refetch={refetch}
+                  />
+                  <DeleteReview id={id} refetch={refetch} />
+                </>
+              )}
             </div>
           ) : (
             <Button
