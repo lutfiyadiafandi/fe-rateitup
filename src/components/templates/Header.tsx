@@ -1,4 +1,4 @@
-import Logo from "@/assets/react.svg";
+import Logo from "@/assets/images/Logo.png";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { CircleUserRound, LogIn, UserPlus } from "lucide-react";
@@ -15,12 +15,12 @@ const Header = () => {
   return (
     <header className="w-full h-20 mx-auto overflow-hidden max-w-[1240px] border-b bg-background rounded-xl border-neutral-200">
       <nav className="flex items-center justify-between w-full h-full px-4 py-2">
-        <div className="flex items-center">
+        <div className="flex items-center gap-5">
           <Link to="/">
             <img src={Logo} alt="Logo" className="w-8 h-8" />
           </Link>
+          <h1 className="text-lg font-semibold text-neutral-900">Rate It Up</h1>
         </div>
-        <h1 className="text-2xl font-bold text-neutral-900">Rate It Up</h1>
         <div className="flex items-center gap-4">
           {isLogin ? (
             <Link to="/profile">

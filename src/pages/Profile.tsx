@@ -1,3 +1,4 @@
+import Footer from "@/components/templates/Footer";
 import Header from "@/components/templates/Header";
 import ProfileDetail from "@/components/templates/ProfileDetail";
 
@@ -6,6 +7,7 @@ const Profile = () => {
     <>
       <Header />
       <ProfileDetail />
+      <Footer />
     </>
   );
 };
