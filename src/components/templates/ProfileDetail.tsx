@@ -2,8 +2,14 @@ import CardRestaurants from "@/components/reusable/CardRestaurants";
 import CardReview from "@/components/reusable/CardReview";
 import EditProfile from "@/components/reusable/EditProfile";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import type { IRestaurant, IUser } from "@/utils/Interface";
+import { useAxios } from "@/hooks/useAxios";
+import { getRestaurants } from "@/service/restaurantApi";
 
 const ProfileDetail = () => {
+  const { data, loading, error } = useAxios<IRestaurant[]>(getRestaurants);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
   return (
     <>
       <main className="w-full mx-auto overflow-hidden max-w-[768px] mt-10">

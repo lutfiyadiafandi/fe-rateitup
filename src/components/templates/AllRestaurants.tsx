@@ -3,15 +3,36 @@ import CardRestaurants from "@/components/reusable/CardRestaurants";
 import { useAxios } from "@/hooks/useAxios";
 import { getRestaurants } from "@/service/restaurantApi";
 import type { IRestaurant } from "@/utils/Interface";
+import { useEffect, useState } from "react";
+import { Button } from "../ui/button";
+import { Link } from "react-router-dom";
 
 const AllRestaurants = () => {
-  const { data, loading, error } = useAxios<IRestaurant[]>(getRestaurants);
+  const [isLogin, setIsLogin] = useState<boolean>(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLogin(!!token);
+  }, []);
+
+  const { data, loading, error, refetch } = useAxios<IRestaurant[]>(
+    getRestaurants,
+    []
+  );
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
   return (
     <main className="w-full mx-auto overflow-hidden max-w-[768px] mt-20">
-      <AddRestaurant />
+      {isLogin ? (
+        <AddRestaurant refetch={refetch} />
+      ) : (
+        <Link to="/login">
+          <Button type="button" variant={"default"}>
+            Create Restaurant
+          </Button>
+        </Link>
+      )}
       <section className="grid grid-cols-1 gap-5 md:grid-cols-2">
         {data?.map((item: IRestaurant) => (
           <CardRestaurants

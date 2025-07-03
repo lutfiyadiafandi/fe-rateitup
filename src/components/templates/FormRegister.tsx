@@ -6,29 +6,28 @@ import { Link, useNavigate } from "react-router-dom";
 import Logo from "@/assets/react.svg";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, type LoginForm } from "@/utils/Schema";
-import { login } from "@/service/authApi";
+import { registerSchema, type RegisterForm } from "@/utils/Schema";
+import { registerAccount } from "@/service/authApi";
 
-const LoginForm = () => {
+const FormRegister = () => {
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<LoginForm>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<RegisterForm>({
+    resolver: zodResolver(registerSchema),
   });
 
-  const onSubmit = async (data: LoginForm) => {
+  const onSubmit = async (data: RegisterForm) => {
     try {
-      const result = await login(data);
-      console.log("Login success", result);
-      localStorage.setItem("token", result.data.token);
+      const result = await registerAccount(data);
+      console.log("Register success", result);
       reset();
-      navigate("/");
+      navigate("/login");
     } catch (error) {
-      console.error("Login failed", error);
+      console.error("Register failed", error);
     }
   };
   return (
@@ -38,12 +37,25 @@ const LoginForm = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="p-6 md:p-8">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
-                <h1 className="text-4xl font-bold text-neutral-900">
-                  Welcome back
-                </h1>
+                <h1 className="text-4xl font-bold text-neutral-900">Welcome</h1>
                 <p className="text-base font-normal text-muted-foreground text-balance">
-                  Login to your account
+                  Register to your account
                 </p>
+              </div>
+              <div className="grid gap-3">
+                <Label htmlFor="name">Full Name</Label>
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="Name..."
+                  required
+                  {...register("name")}
+                />
+                {errors.name && (
+                  <span className="text-xs text-red-500">
+                    {errors.name.message}
+                  </span>
+                )}
               </div>
               <div className="grid gap-3">
                 <Label htmlFor="username">Username</Label>
@@ -81,14 +93,14 @@ const LoginForm = () => {
                 className="w-full"
                 variant={"default"}
               >
-                {isSubmitting ? "Loading..." : "Login"}
+                {isSubmitting ? "Loading..." : "Register"}
               </Button>
 
               <div className="text-sm text-center">
-                Don't have an account?
-                <Link to={"/register"} className="underline underline-offset-4">
+                Already have an account?
+                <Link to={"/login"} className="underline underline-offset-4">
                   {" "}
-                  Sign up
+                  Sign in
                 </Link>
               </div>
             </div>
@@ -108,4 +120,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default FormRegister;

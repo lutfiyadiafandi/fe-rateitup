@@ -16,8 +16,9 @@ import { restaurantSchema, type RestaurantForm } from "@/utils/Schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRef } from "react";
+import { createRestaurant } from "@/service/restaurantApi";
 
-const AddRestaurant = () => {
+const AddRestaurant = ({ refetch }: { refetch: () => void }) => {
   const dialogCloseRef = useRef<HTMLButtonElement>(null);
   const {
     register,
@@ -29,10 +30,14 @@ const AddRestaurant = () => {
   });
 
   const onSubmit = async (data: RestaurantForm) => {
-    // TODO: handle API call here
-    console.log(data);
-    reset();
-    dialogCloseRef.current?.click();
+    try {
+      await createRestaurant(data);
+      reset();
+      refetch();
+      dialogCloseRef.current?.click();
+    } catch (error) {
+      console.error("Failed to create restaurant", error);
+    }
   };
   return (
     <Dialog>

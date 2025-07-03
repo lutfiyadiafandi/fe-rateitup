@@ -12,32 +12,32 @@ export interface IUser {
 }
 
 export interface IRestaurant {
-  id: number;
+  id?: number;
   name: string;
   description: string;
   photoUrl: string;
   location: string;
   mapsUrl: string;
   userId?: number;
-  user: IUser;
+  user?: IUser;
   reviews?: IReview[];
 }
 
 export interface IReview {
-  id: number;
+  id?: number;
   title: string;
   text: string;
   rating: number;
-  createdAt: Date;
-  user: IUser;
+  createdAt?: Date;
+  user?: IUser;
   restaurant?: IRestaurant;
-  comments: IComment[];
+  comments?: IComment[];
 }
 
 export interface IComment {
-  id: number;
+  id?: number;
   text: string;
-  createdAt: Date;
-  user: IUser;
-  review: IReview;
+  createdAt?: Date;
+  user?: IUser;
+  revie?: IReview;
 }

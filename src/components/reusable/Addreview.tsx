@@ -16,8 +16,9 @@ import { reviewSchema, type ReviewForm } from "@/utils/Schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRef } from "react";
+import { createReview } from "@/service/reviewApi";
 
-const AddReview = () => {
+const AddReview = ({ id, refetch }: { id: number; refetch: () => void }) => {
   const dialogCloseRef = useRef<HTMLButtonElement>(null);
   const {
     register,
@@ -29,10 +30,15 @@ const AddReview = () => {
   });
 
   const onSubmit = async (data: ReviewForm) => {
-    // TODO: handle API call here
-    console.log(data);
-    reset();
-    dialogCloseRef.current?.click();
+    try {
+      await createReview(id, data);
+      console.log(data);
+      reset();
+      refetch();
+      dialogCloseRef.current?.click();
+    } catch (error) {
+      console.error("Failed to create review", error);
+    }
   };
   return (
     <Dialog>

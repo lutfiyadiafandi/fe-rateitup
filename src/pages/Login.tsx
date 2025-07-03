@@ -1,9 +1,9 @@
-import LoginForm from "@/components/templates/LoginForm";
+import FormLogin from "@/components/templates/FormLogin";
 
 const Login = () => {
   return (
     <>
-      <LoginForm />
+      <FormLogin />
     </>
   );
 };

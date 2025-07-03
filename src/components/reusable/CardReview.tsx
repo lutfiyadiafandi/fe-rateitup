@@ -24,15 +24,16 @@ const CardReview = ({
   createdAt,
   user,
   comments,
-}: IReview) => {
-  const [action, setAction] = useState(false);
+  refetch,
+  isUser,
+}: IReview & { refetch: () => void; isUser: boolean }) => {
   const [seeComments, setSeeComments] = useState(false);
 
   return (
     <Card className="py-6">
       <CardHeader>
         <CardTitle className="text-lg font-medium text-neutral-900">
-          Reviews by {user.username}
+          Reviews by @{user?.username}
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -45,9 +46,9 @@ const CardReview = ({
       </CardContent>
       <CardFooter className="flex items-center justify-between">
         <Rating value={rating} />
-        <CardDescription>{formatDate(createdAt)}</CardDescription>
+        <CardDescription>{createdAt && formatDate(createdAt)}</CardDescription>
         <CardAction className="flex items-center">
-          {action ? (
+          {isUser ? (
             <div className="flex gap-2">
               <Button
                 type={"button"}
@@ -83,11 +84,10 @@ const CardReview = ({
                 text={comment.text}
                 createdAt={comment.createdAt}
                 user={comment.user}
-                review={comment.review}
               />
             ))}
           </div>
-          <AddComment />
+          {typeof id === "number" && <AddComment id={id} refetch={refetch} />}
         </section>
       )}
     </Card>

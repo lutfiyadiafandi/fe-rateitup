@@ -4,8 +4,9 @@ import { Send } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { commentSchema, type CommentForm } from "@/utils/Schema";
+import { createComment } from "@/service/commentApi";
 
-const AddComment = () => {
+const AddComment = ({ id, refetch }: { id: number; refetch: () => void }) => {
   const {
     register,
     handleSubmit,
@@ -16,9 +17,14 @@ const AddComment = () => {
   });
 
   const onSubmit = async (data: CommentForm) => {
-    // TODO: handle API call here
-    console.log(data);
-    reset();
+    try {
+      await createComment(id, data);
+      console.log(data);
+      reset();
+      refetch();
+    } catch (error) {
+      console.error("Failed to create review", error);
+    }
   };
   return (
     <form

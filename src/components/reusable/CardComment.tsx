@@ -9,12 +9,12 @@ import {
 } from "../ui/card";
 import { formatDate } from "@/lib/utils";
 
-const CardComment = ({ id, text, createdAt, user }: IComment) => {
+const CardComment = ({ text, createdAt, user }: IComment) => {
   return (
     <Card className="w-full py-3 bg-secondary">
       <CardHeader>
         <CardTitle className="text-base font-medium text-neutral-900">
-          Comments by {user.username}
+          Comments by @{user?.username}
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -23,7 +23,7 @@ const CardComment = ({ id, text, createdAt, user }: IComment) => {
         </CardDescription>
       </CardContent>
       <CardFooter className="flex items-center justify-between">
-        <CardDescription>{formatDate(createdAt)}</CardDescription>
+        <CardDescription>{createdAt && formatDate(createdAt)}</CardDescription>
       </CardFooter>
     </Card>
   );
