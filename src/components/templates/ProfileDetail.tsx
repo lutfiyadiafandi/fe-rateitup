@@ -5,8 +5,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import type { IRestaurant, IReview, IUser } from "@/utils/Interface";
 import { useAxios } from "@/hooks/useAxios";
 import { Button } from "../ui/button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getUser } from "@/service/userApi";
+import { MoveLeft } from "lucide-react";
 
 const ProfileDetail = () => {
   const navigate = useNavigate();
@@ -22,8 +23,14 @@ const ProfileDetail = () => {
 
   return (
     <>
-      <main className="w-full mx-auto overflow-hidden max-w-[768px] mt-10">
-        <section className="flex flex-col items-center justify-center gap-5 py-8 bg-background rounded-3xl">
+      <main className="w-full mx-auto overflow-hidden max-w-[768px] mt-5 px-4 lg:px-0">
+        <Link to={"/"}>
+          <Button type="button" variant={"default"}>
+            <MoveLeft />
+            Back
+          </Button>
+        </Link>
+        <section className="flex flex-col items-center justify-center gap-5 py-8 mt-3 pb-52 bg-background rounded-3xl">
           <h1 className="text-2xl font-bold text-neutral-900">Profile</h1>
           <div>
             <p className="text-base font-medium text-neutral-900">
@@ -46,7 +53,7 @@ const ProfileDetail = () => {
               </Button>
             </div>
           )}
-          <Tabs defaultValue="restaurant" className="w-full">
+          <Tabs defaultValue="restaurant" className="w-full mt-5">
             <TabsList className="flex justify-center w-full h-10 item">
               <TabsTrigger value="restaurant">Restaurants</TabsTrigger>
               <TabsTrigger value="review">Reviews</TabsTrigger>

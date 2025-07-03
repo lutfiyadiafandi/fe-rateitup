@@ -6,6 +6,7 @@ import type { IRestaurant } from "@/utils/Interface";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
+import HeroImage from "@/assets/images/Hero.png";
 
 const AllRestaurants = () => {
   const [isLogin, setIsLogin] = useState<boolean>(false);
@@ -21,29 +22,51 @@ const AllRestaurants = () => {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <main className="w-full mx-auto overflow-hidden max-w-[768px] mt-20">
-      {isLogin ? (
-        <AddRestaurant refetch={refetch} />
-      ) : (
-        <Link to="/login">
-          <Button type="button" variant={"default"}>
-            Create Restaurant
-          </Button>
-        </Link>
-      )}
-      <section className="grid grid-cols-1 gap-5 md:grid-cols-2">
-        {data?.map((restaurant: IRestaurant) => (
-          <CardRestaurants
-            key={restaurant.id}
-            id={restaurant.id}
-            name={restaurant.name}
-            description={restaurant.description}
-            photoUrl={restaurant.photoUrl}
-            location={restaurant.location}
-            mapsUrl={restaurant.mapsUrl}
-            isUser={false}
-          />
-        ))}
+    <main className="w-full mx-auto overflow-hidden max-w-[1240px] mt-5 px-4 lg:px-0">
+      <section className="relative w-full h-[400px] overflow-hidden rounded-xl">
+        <img
+          src={HeroImage}
+          alt="Hero Image"
+          className="object-cover w-full h-full rounded-sm lg:aspect-video"
+        />
+        <div className="absolute flex flex-col items-center justify-center gap-10 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+          <h1 className="text-3xl font-bold text-center text-white md:text-5xl">
+            Create Your Best Restaurant Experience
+          </h1>
+          {isLogin ? (
+            <AddRestaurant refetch={refetch} />
+          ) : (
+            <Link to="/login">
+              <Button
+                variant="outline"
+                size={"lg"}
+                className="p-4 text-xl font-medium rounded-lg text-neutral-900"
+              >
+                Add Restaurant
+              </Button>
+            </Link>
+          )}
+        </div>
+      </section>
+      <section className="max-w-[768px] mx-auto mt-10 pb-52">
+        <h1 className="mb-5 text-2xl font-bold text-center text-neutral-900">
+          Find Your Favorite Restaurants
+        </h1>
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+          {data?.map((restaurant: IRestaurant) => (
+            <CardRestaurants
+              key={restaurant.id}
+              id={restaurant.id}
+              name={restaurant.name}
+              description={restaurant.description}
+              photoUrl={restaurant.photoUrl}
+              location={restaurant.location}
+              mapsUrl={restaurant.mapsUrl}
+              isUser={false}
+              refetch={refetch}
+            />
+          ))}
+        </div>
       </section>
     </main>
   );

@@ -39,7 +39,13 @@ const AddRestaurant = ({ refetch }: { refetch: () => void }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="default">Create Restaurant</Button>
+        <Button
+          variant="outline"
+          size={"lg"}
+          className="p-4 text-xl font-medium rounded-lg text-neutral-900"
+        >
+          Add Restaurant
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">

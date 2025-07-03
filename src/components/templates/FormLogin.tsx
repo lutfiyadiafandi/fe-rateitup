@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link, useNavigate } from "react-router-dom";
-import Logo from "@/assets/react.svg";
+import Logo from "@/assets/images/Logo.png";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type LoginForm } from "@/utils/Schema";
@@ -23,7 +23,6 @@ const FormLogin = () => {
   const onSubmit = async (data: LoginForm) => {
     try {
       const result = await login(data);
-      console.log("Login success", result);
       localStorage.setItem("token", result.data.token);
       reset();
       navigate("/");
@@ -32,7 +31,7 @@ const FormLogin = () => {
     }
   };
   return (
-    <main className="flex items-center justify-center min-h-screen overflow-x-hidden">
+    <main className="flex items-center justify-center min-h-screen px-4 overflow-x-hidden lg:px-0">
       <Card className="flex flex-col w-full max-w-3xl gap-6">
         <CardContent className="grid p-0 md:grid-cols-2">
           <form onSubmit={handleSubmit(onSubmit)} className="p-6 md:p-8">
@@ -93,12 +92,12 @@ const FormLogin = () => {
               </div>
             </div>
           </form>
-          <div className="relative hidden bg-muted md:block">
+          <div className="relative hidden bg-white md:block">
             <Link to={"/"}>
               <img
                 src={Logo}
                 alt="Image"
-                className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+                className="absolute inset-0 h-full w-full object-contain dark:brightness-[0.2] dark:grayscale"
               />
             </Link>
           </div>

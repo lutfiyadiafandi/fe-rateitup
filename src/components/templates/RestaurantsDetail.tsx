@@ -7,6 +7,7 @@ import type { IRestaurant, IReview } from "@/utils/Interface";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Button } from "../ui/button";
+import { MoveLeft } from "lucide-react";
 
 const RestaurantsDetail = () => {
   const [isLogin, setIsLogin] = useState<boolean>(false);
@@ -26,31 +27,43 @@ const RestaurantsDetail = () => {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <main className="w-full mx-auto overflow-hidden max-w-[768px] mt-20">
-      {isLogin ? (
-        <AddReview restaurantId={restaurantId} refetch={refetch} />
-      ) : (
-        <Link to="/login">
+    <main className="w-full mx-auto overflow-hidden max-w-[768px] px-4 lg:px-0 mt-5">
+      <section className="flex flex-col gap-5">
+        <Link to={"/"}>
           <Button type="button" variant={"default"}>
-            Create Review
+            <MoveLeft />
+            Back
           </Button>
         </Link>
-      )}
-      {data && (
-        <CardRestaurants
-          key={data.id}
-          id={data.id}
-          name={data.name}
-          description={data.description}
-          photoUrl={data.photoUrl}
-          location={data.location}
-          mapsUrl={data.mapsUrl}
-          refetch={() => {}}
-          isUser={false}
-        />
-      )}
+        {data && (
+          <CardRestaurants
+            key={data.id}
+            id={data.id}
+            name={data.name}
+            description={data.description}
+            photoUrl={data.photoUrl}
+            location={data.location}
+            mapsUrl={data.mapsUrl}
+            refetch={() => {}}
+            isUser={false}
+          />
+        )}
+        <div className="flex justify-center">
+          {isLogin ? (
+            <AddReview restaurantId={restaurantId} refetch={refetch} />
+          ) : (
+            <Link to="/login">
+              <Button type="button" variant={"default"}>
+                Create Review
+              </Button>
+            </Link>
+          )}
+        </div>
+      </section>
       <section className="mt-10 pb-52">
-        <h1 className="mb-5 text-2xl font-bold text-neutral-900">Reviews</h1>
+        <h1 className="mb-5 text-2xl font-bold text-center text-neutral-900">
+          What's People Say
+        </h1>
         <div className="flex flex-col gap-5">
           {data?.reviews?.length === 0 ? (
             <p>No reviews yet</p>

@@ -46,7 +46,13 @@ const AddReview = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="default">Create Review</Button>
+        <Button
+          variant="default"
+          size={"lg"}
+          className="p-4 text-xl font-medium text-white rounded-lg"
+        >
+          Add Review
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
