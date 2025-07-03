@@ -1,6 +1,6 @@
 import Logo from "@/assets/react.svg";
 import { Link } from "react-router-dom";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { CircleUserRound, LogIn, UserPlus } from "lucide-react";
 import { useState } from "react";
 

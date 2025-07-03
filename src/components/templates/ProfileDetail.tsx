@@ -1,6 +1,6 @@
-import CardRestaurants from "../reusable/CardRestaurants";
-import CardReview from "../reusable/CardReview";
-import EditProfile from "../reusable/EditProfile";
+import CardRestaurants from "@/components/reusable/CardRestaurants";
+import CardReview from "@/components/reusable/CardReview";
+import EditProfile from "@/components/reusable/EditProfile";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 
 const ProfileDetail = () => {

@@ -12,6 +12,7 @@ export interface IRestaurant {
   photoUrl: string;
   location: string;
   mapsUrl: string;
+  userId?: number;
   user: IUser;
 }
 
