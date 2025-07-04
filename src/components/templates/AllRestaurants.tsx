@@ -4,7 +4,7 @@ import { useAxios } from "@/hooks/useAxios";
 import { getRestaurants } from "@/service/restaurantApi";
 import type { IRestaurant } from "@/utils/Interface";
 import { useEffect, useState } from "react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import HeroImage from "@/assets/images/Hero.png";
 
