@@ -14,8 +14,8 @@ import CardComment from "@/components/reusable/CardComment";
 import AddComment from "@/components/reusable/AddComment";
 import type { IComment, IReview } from "@/utils/Interface";
 import { formatDate } from "@/lib/utils";
-import UpdateReview from "./UpdateReview";
-import DeleteReview from "./DeleteReview";
+import UpdateReview from "@/components/reusable/UpdateReview";
+import DeleteReview from "@/components/reusable/DeleteReview";
 
 const CardReview = ({
   id,

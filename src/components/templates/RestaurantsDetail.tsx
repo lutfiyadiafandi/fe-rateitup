@@ -6,7 +6,7 @@ import { getRestaurant } from "@/service/restaurantApi";
 import type { IRestaurant, IReview } from "@/utils/Interface";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { MoveLeft } from "lucide-react";
 
 const RestaurantsDetail = () => {

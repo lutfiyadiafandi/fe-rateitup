@@ -6,7 +6,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../ui/card";
+} from "@/components/ui/card";
 import { formatDate } from "@/lib/utils";
 
 const CardComment = ({ text, createdAt, user }: IComment) => {

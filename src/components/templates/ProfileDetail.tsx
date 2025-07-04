@@ -1,10 +1,10 @@
 import CardRestaurants from "@/components/reusable/CardRestaurants";
 import CardReview from "@/components/reusable/CardReview";
 import EditProfile from "@/components/reusable/EditProfile";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { IRestaurant, IReview, IUser } from "@/utils/Interface";
 import { useAxios } from "@/hooks/useAxios";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { getUser } from "@/service/userApi";
 import { MoveLeft } from "lucide-react";

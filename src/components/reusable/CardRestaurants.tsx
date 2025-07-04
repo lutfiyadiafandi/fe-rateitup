@@ -6,12 +6,12 @@ import {
   CardDescription,
   CardFooter,
   CardTitle,
-} from "../ui/card";
-import { Button } from "../ui/button";
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { MapPin } from "lucide-react";
 import type { IRestaurant } from "@/utils/Interface";
-import UpdateRestaurant from "./UpdateRestaurant";
-import DeleteRestaurant from "./DeleteRestaurant";
+import UpdateRestaurant from "@/components/reusable/UpdateRestaurant";
+import DeleteRestaurant from "@/components/reusable/DeleteRestaurant";
 
 const CardRestaurants = ({
   id,
