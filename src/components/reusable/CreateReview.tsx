@@ -17,7 +17,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createReview } from "@/service/reviewApi";
 
-const AddReview = ({
+const CreateReview = ({
   restaurantId,
   refetch,
 }: {
@@ -112,4 +112,4 @@ const AddReview = ({
   );
 };
 
-export default AddReview;
+export default CreateReview;

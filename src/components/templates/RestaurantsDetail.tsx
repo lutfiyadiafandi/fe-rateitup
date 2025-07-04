@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MoveLeft } from "lucide-react";
-import AddReview from "@/components/reusable/AddReview";
+import CreateReview from "@/components/reusable/CreateReview";
 
 const RestaurantsDetail = () => {
   const [isLogin, setIsLogin] = useState<boolean>(false);
@@ -50,7 +50,7 @@ const RestaurantsDetail = () => {
         )}
         <div className="flex justify-center">
           {isLogin ? (
-            <AddReview restaurantId={restaurantId} refetch={refetch} />
+            <CreateReview restaurantId={restaurantId} refetch={refetch} />
           ) : (
             <Link to="/login">
               <Button type="button" variant={"default"}>
