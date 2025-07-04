@@ -1,4 +1,3 @@
-import AddReview from "@/components/reusable/AddReview";
 import CardRestaurants from "@/components/reusable/CardRestaurants";
 import CardReview from "@/components/reusable/CardReview";
 import { useAxios } from "@/hooks/useAxios";
@@ -8,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MoveLeft } from "lucide-react";
+import AddReview from "@/components/reusable/AddReview";
 
 const RestaurantsDetail = () => {
   const [isLogin, setIsLogin] = useState<boolean>(false);
