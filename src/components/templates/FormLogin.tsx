@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type LoginForm } from "@/utils/Schema";
 import { login } from "@/service/authApi";
+import { toast } from "sonner";
 
 const FormLogin = () => {
   const navigate = useNavigate();
@@ -24,10 +25,29 @@ const FormLogin = () => {
     try {
       const result = await login(data);
       localStorage.setItem("token", result.data.token);
+      toast("Login successfully", {
+        style: {
+          border: "1px solid #22c55e",
+          padding: "16px",
+          color: "#22c55e",
+        },
+        icon: "👏",
+        description: "Welcome back",
+      });
       reset();
-      navigate("/");
-    } catch (error) {
-      console.error("Login failed", error);
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
+    } catch (error: any) {
+      toast("Login failed", {
+        style: {
+          border: "1px solid #ef4444",
+          padding: "16px",
+          color: "#ef4444",
+        },
+        icon: "❌",
+        description: `${error.response.data.message}`,
+      });
     }
   };
   return (

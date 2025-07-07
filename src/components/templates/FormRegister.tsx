@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, type RegisterForm } from "@/utils/Schema";
 import { registerAccount } from "@/service/authApi";
+import { toast } from "sonner";
 
 const FormRegister = () => {
   const navigate = useNavigate();
@@ -23,10 +24,29 @@ const FormRegister = () => {
   const onSubmit = async (data: RegisterForm) => {
     try {
       await registerAccount(data);
+      toast("Register successfully", {
+        style: {
+          border: "1px solid #22c55e",
+          padding: "16px",
+          color: "#22c55e",
+        },
+        icon: "✅",
+        description: "Welcome to Rate It Up",
+      });
       reset();
-      navigate("/login");
-    } catch (error) {
-      console.error("Register failed", error);
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
+    } catch (error: any) {
+      toast("Register failed", {
+        style: {
+          border: "1px solid #ef4444",
+          padding: "16px",
+          color: "#ef4444",
+        },
+        icon: "❌",
+        description: `${error.response.data.message}`,
+      });
     }
   };
   return (

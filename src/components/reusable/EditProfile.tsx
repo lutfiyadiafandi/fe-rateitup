@@ -16,6 +16,7 @@ import { userSchema, type UserForm } from "@/utils/Schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const EditProfile = ({
   name,
@@ -41,11 +42,30 @@ const EditProfile = ({
   const onSubmit = async (data: UserForm) => {
     try {
       await updateUser(id, data);
+      toast("Update account successfully", {
+        style: {
+          border: "1px solid #22c55e",
+          padding: "16px",
+          color: "#22c55e",
+        },
+        icon: "✅",
+        description: "Your account has been updated",
+      });
       reset();
-      refetch();
-      dialogCloseRef.current?.click();
-    } catch (error) {
-      console.error("Failed to update profile", error);
+      setTimeout(() => {
+        refetch();
+        dialogCloseRef.current?.click();
+      }, 1500);
+    } catch (error: any) {
+      toast("Update account failed", {
+        style: {
+          border: "1px solid #ef4444",
+          padding: "16px",
+          color: "#ef4444",
+        },
+        icon: "❌",
+        description: `${error.response.data.message}`,
+      });
     }
   };
   return (

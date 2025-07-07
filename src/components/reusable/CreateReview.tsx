@@ -16,6 +16,7 @@ import { reviewSchema, type ReviewForm } from "@/utils/Schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createReview } from "@/service/reviewApi";
+import { toast } from "sonner";
 
 const CreateReview = ({
   restaurantId,
@@ -36,11 +37,29 @@ const CreateReview = ({
   const onSubmit = async (data: ReviewForm) => {
     try {
       await createReview(restaurantId, data);
-      console.log(data);
+      toast("Add review successfully", {
+        style: {
+          border: "1px solid #22c55e",
+          padding: "16px",
+          color: "#22c55e",
+        },
+        icon: "✅",
+        description: "Thanks for your contribution",
+      });
       reset();
+      // setTimeout(() => {
+      // }, 1500);
       refetch();
-    } catch (error) {
-      console.error("Failed to create review", error);
+    } catch (error: any) {
+      toast("Add review failed", {
+        style: {
+          border: "1px solid #ef4444",
+          padding: "16px",
+          color: "#ef4444",
+        },
+        icon: "❌",
+        description: `${error.response.data.message}`,
+      });
     }
   };
   return (

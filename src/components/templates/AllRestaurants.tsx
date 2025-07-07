@@ -18,8 +18,8 @@ const AllRestaurants = () => {
 
   const { data, loading, error, refetch } =
     useAxios<IRestaurant[]>(getRestaurants);
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  // if (loading) return <p>Loading...</p>;
+  // if (error) return <p>Error: {error.message}</p>;
 
   return (
     <main className="w-full mx-auto overflow-hidden max-w-[1240px] mt-5 px-4 lg:px-0">
@@ -52,21 +52,27 @@ const AllRestaurants = () => {
         <h1 className="mb-5 text-2xl font-bold text-center text-neutral-900">
           Find Your Favorite Restaurants
         </h1>
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-          {data?.map((restaurant: IRestaurant) => (
-            <CardRestaurants
-              key={restaurant.id}
-              id={restaurant.id}
-              name={restaurant.name}
-              description={restaurant.description}
-              photoUrl={restaurant.photoUrl}
-              location={restaurant.location}
-              mapsUrl={restaurant.mapsUrl}
-              isUser={false}
-              refetch={refetch}
-            />
-          ))}
-        </div>
+        {data?.length === 0 && <p>No Restaurants Found</p>}
+        {error && <p>Error: {error.message}</p>}
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+            {data?.map((restaurant: IRestaurant) => (
+              <CardRestaurants
+                key={restaurant.id}
+                id={restaurant.id}
+                name={restaurant.name}
+                description={restaurant.description}
+                photoUrl={restaurant.photoUrl}
+                location={restaurant.location}
+                mapsUrl={restaurant.mapsUrl}
+                isUser={false}
+                refetch={refetch}
+              />
+            ))}
+          </div>
+        )}
       </section>
     </main>
   );

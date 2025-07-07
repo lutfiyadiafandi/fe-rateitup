@@ -13,8 +13,6 @@ const ProfileDetail = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const { data, loading, error, refetch } = useAxios<IUser>(getUser, [token]);
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -39,6 +37,7 @@ const ProfileDetail = () => {
             <p className="text-base font-medium text-neutral-900">
               Username: @{data?.username}
             </p>
+            {error && <p>Error:{error.message}</p>}
           </div>
           {data?.id && (
             <div className="flex gap-5">
@@ -62,38 +61,50 @@ const ProfileDetail = () => {
               value="restaurant"
               className="grid grid-cols-1 gap-5 md:grid-cols-2"
             >
-              {data?.restaurants?.map((restaurant: IRestaurant) => (
-                <CardRestaurants
-                  key={restaurant.id}
-                  id={restaurant.id}
-                  name={restaurant.name}
-                  description={restaurant.description}
-                  photoUrl={restaurant.photoUrl}
-                  location={restaurant.location}
-                  mapsUrl={restaurant.mapsUrl}
-                  refetch={refetch}
-                  isUser
-                />
-              ))}
+              {loading ? (
+                <p>Loading...</p>
+              ) : (
+                <>
+                  {data?.restaurants?.map((restaurant: IRestaurant) => (
+                    <CardRestaurants
+                      key={restaurant.id}
+                      id={restaurant.id}
+                      name={restaurant.name}
+                      description={restaurant.description}
+                      photoUrl={restaurant.photoUrl}
+                      location={restaurant.location}
+                      mapsUrl={restaurant.mapsUrl}
+                      refetch={refetch}
+                      isUser
+                    />
+                  ))}
+                </>
+              )}
             </TabsContent>
             <TabsContent
               value="review"
               className="grid grid-cols-1 gap-5 md:grid-cols-2"
             >
-              {data?.reviews?.map(
-                (review: IReview) =>
-                  review?.id && (
-                    <CardReview
-                      key={review.id}
-                      id={review.id}
-                      title={review.title}
-                      text={review.text}
-                      rating={review.rating}
-                      user={review.user}
-                      refetch={refetch}
-                      isUser
-                    />
-                  )
+              {loading ? (
+                <p>Loading...</p>
+              ) : (
+                <>
+                  {data?.reviews?.map(
+                    (review: IReview) =>
+                      review?.id && (
+                        <CardReview
+                          key={review.id}
+                          id={review.id}
+                          title={review.title}
+                          text={review.text}
+                          rating={review.rating}
+                          user={review.user}
+                          refetch={refetch}
+                          isUser
+                        />
+                      )
+                  )}
+                </>
               )}
             </TabsContent>
           </Tabs>

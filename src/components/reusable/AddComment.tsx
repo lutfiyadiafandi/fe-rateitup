@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { commentSchema, type CommentForm } from "@/utils/Schema";
 import { createComment } from "@/service/commentApi";
+import { toast } from "sonner";
 
 const AddComment = ({ id, refetch }: { id: number; refetch: () => void }) => {
   const {
@@ -19,10 +20,29 @@ const AddComment = ({ id, refetch }: { id: number; refetch: () => void }) => {
   const onSubmit = async (data: CommentForm) => {
     try {
       await createComment(id, data);
+      toast("Add comment successfully", {
+        style: {
+          border: "1px solid #22c55e",
+          padding: "16px",
+          color: "#22c55e",
+        },
+        icon: "✅",
+        description: "Thanks for your contribution",
+      });
       reset();
-      refetch();
-    } catch (error) {
-      console.error("Failed to create comment", error);
+      setTimeout(() => {
+        refetch();
+      }, 1500);
+    } catch (error: any) {
+      toast("Add comment failed", {
+        style: {
+          border: "1px solid #ef4444",
+          padding: "16px",
+          color: "#ef4444",
+        },
+        icon: "❌",
+        description: `${error.response.data.message}`,
+      });
     }
   };
   return (

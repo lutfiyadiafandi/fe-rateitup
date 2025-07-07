@@ -12,14 +12,34 @@ import {
 import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 import { deleteReview } from "@/service/reviewApi";
+import { toast } from "sonner";
 
 const DeleteReview = ({ id, refetch }: { id: number; refetch: () => void }) => {
   const onClick = async (id: number) => {
     try {
       await deleteReview(id);
-      refetch();
-    } catch (error) {
-      console.error("Failed to delete review", error);
+      toast("Delete review successfully", {
+        style: {
+          border: "1px solid #22c55e",
+          padding: "16px",
+          color: "#22c55e",
+        },
+        icon: "✅",
+        description: "Your review has been deleted",
+      });
+      setTimeout(() => {
+        refetch();
+      }, 1500);
+    } catch (error: any) {
+      toast("Delete review failed", {
+        style: {
+          border: "1px solid #ef4444",
+          padding: "16px",
+          color: "#ef4444",
+        },
+        icon: "❌",
+        description: `${error.response.data.message}`,
+      });
     }
   };
   return (

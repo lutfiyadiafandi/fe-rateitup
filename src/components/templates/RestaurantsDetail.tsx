@@ -23,8 +23,6 @@ const RestaurantsDetail = () => {
     getRestaurant,
     [restaurantId]
   );
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <main className="w-full mx-auto overflow-hidden max-w-[768px] px-4 lg:px-0 mt-5">
@@ -35,19 +33,27 @@ const RestaurantsDetail = () => {
             Back
           </Button>
         </Link>
-        {data && (
-          <CardRestaurants
-            key={data.id}
-            id={data.id}
-            name={data.name}
-            description={data.description}
-            photoUrl={data.photoUrl}
-            location={data.location}
-            mapsUrl={data.mapsUrl}
-            refetch={() => {}}
-            isUser={false}
-          />
+        {error && <p>Error:{error.message}</p>}
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            {data && (
+              <CardRestaurants
+                key={data.id}
+                id={data.id}
+                name={data.name}
+                description={data.description}
+                photoUrl={data.photoUrl}
+                location={data.location}
+                mapsUrl={data.mapsUrl}
+                refetch={() => {}}
+                isUser={false}
+              />
+            )}
+          </>
         )}
+
         <div className="flex justify-center">
           {isLogin ? (
             <CreateReview restaurantId={restaurantId} refetch={refetch} />

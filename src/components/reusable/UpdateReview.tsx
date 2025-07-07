@@ -18,6 +18,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { updateReview } from "@/service/reviewApi";
 import type { IReview } from "@/utils/Interface";
 import { SquarePen } from "lucide-react";
+import { toast } from "sonner";
 
 const UpdateReview = ({
   id,
@@ -38,10 +39,29 @@ const UpdateReview = ({
   const onSubmit = async (data: ReviewForm) => {
     try {
       await updateReview(id!, data);
+      toast("Update review successfully", {
+        style: {
+          border: "1px solid #22c55e",
+          padding: "16px",
+          color: "#22c55e",
+        },
+        icon: "✅",
+        description: "Your review has been updated",
+      });
       reset();
-      refetch();
-    } catch (error) {
-      console.error("Failed to update review", error);
+      setTimeout(() => {
+        refetch();
+      }, 1500);
+    } catch (error: any) {
+      toast("Update review failed", {
+        style: {
+          border: "1px solid #ef4444",
+          padding: "16px",
+          color: "#ef4444",
+        },
+        icon: "❌",
+        description: `${error.response.data.message}`,
+      });
     }
   };
   return (
